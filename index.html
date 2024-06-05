@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="./css/index.css" />
+  </head>
+  <body>
+    <table>
+      <thead>
+        <tr>
+          <th>Id</th>
+          <th>Nom</th>
+          <th>Prenon</th>
+          <th>Email</th>
+        </tr>
+      </thead>
+      <tbody id="tb"></tbody>
+    </table>
+    <script>
+      async function getData() {
+        try {
+          //chercher des données depuis un fichier json local
+          const response = await fetch("./data.json");
+          //tester si la reponse est ok
+          if (response.ok) {
+            //on recupere les données
+            const data = await response.json();
+            //parcourire les données
+            data.map((post) => {
+              //creer une ligne du tableau
+              let tr = document.createElement("tr");
+              //creer 4 cellules(td)
+              let id = document.createElement("td");
+              let Nom = document.createElement("td");
+              let Prenon = document.createElement("td");
+              let email = document.createElement("td");
+              //assigner les valeurs convenables dans chaque cellules
+              id.textContent = post.id;
+              Nom.textContent = post.last_name;
+              Prenon.textContent = post.first_name;
+              email.textContent = post.email;
+              //ajouter les 4 elements <td> a leurs parent <tr>
+              tr.appendChild(id);
+              tr.appendChild(Nom);
+              tr.appendChild(Prenon);
+              tr.appendChild(email);
+              //cibler l element <tbody> via son ID et lui ajouter l element <tr>
+              document.getElementById("tb").appendChild(tr);
+            });
+          }
+        } catch (e) {
+          console.log(e);
+        }
+      }
+      getData();
+    </script>
+  </body>
+</html>
